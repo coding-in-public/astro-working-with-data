@@ -1,0 +1,51 @@
+---
+import Card from "../components/Card.astro";
+---
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="generator" content={Astro.generator} />
+    <link rel="stylesheet" href="https://unpkg.com/open-props" />
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/open-props/normalize.min.css"
+    />
+
+    <title>Astro</title>
+  </head>
+  <body>
+    <h1>Astro Data Options</h1>
+    <div class="card-wrapper">
+      <Card>
+        <h2>1: Local Frontmatter Data</h2>
+      </Card>
+    </div>
+  </body>
+</html>
+
+<style is:global>
+  body {
+    padding: var(--size-4);
+  }
+
+  .card-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--size-4);
+    margin-block: var(--size-4);
+  }
+
+  ul {
+    padding: var(--size-2);
+  }
+
+  li {
+    display: flex;
+    flex-wrap: wrap;
+    place-items: center;
+    gap: var(--size-2);
+  }
+</style>
