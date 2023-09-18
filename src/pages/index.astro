@@ -1,5 +1,28 @@
 ---
+import { getCollection } from "astro:content";
 import Card from "../components/Card.astro";
+import APICard from "../components/APICard";
+
+// Data Method 1: Local Frontmatter Data
+const data1 = ["Chris", "Jon", "Jes"];
+
+// Data Method 2: Fetch Remote Data
+type Post = {
+  userId: number;
+  id: number;
+  title: string;
+  body: string;
+};
+const res = await fetch("https://jsonplaceholder.typicode.com/posts");
+const data2: Post[] = await res.json();
+
+// Data Method 3: Import Local Files
+import data3Json from "../data/data3.json";
+import data3Ts from "../data/data3.ts";
+const data3Glob = await Astro.glob("../data/**/*.md");
+
+// Data Method 4: Content Collections
+const data4 = await getCollection("product");
 ---
 
 <html lang="en">
@@ -21,18 +44,42 @@ import Card from "../components/Card.astro";
     <div class="card-wrapper">
       <Card>
         <h2>1: Local Frontmatter Data</h2>
+        <ul>
+          {data1.map((i) => <li>{i}</li>)}
+        </ul>
       </Card>
       <Card>
         <h2>2: Fetch Remote Data</h2>
+        <ul>
+          {data2.slice(0, 4).map((i) => <li>{i.title}</li>)}
+        </ul>
       </Card>
       <Card>
         <h2>3: Import Local Files</h2>
+        <ul>
+          {data3Json.map((i) => <li>{i.name}</li>)}
+        </ul>
+        <ul>
+          {data3Ts.map((i) => <li>{i.name}</li>)}
+        </ul>
+
+        <!-- <Fragment set:html={data3Glob.map((post) => post.compiledContent())} />
+        {
+          data3Glob.map((post) => {
+            const Content = post.Content;
+            return <Content />;
+          })
+        } -->
       </Card>
       <Card>
         <h2>4: Content Collections</h2>
+        <ul>
+          {data4.map((i) => <li>{i.data.name}</li>)}
+        </ul>
       </Card>
       <Card>
         <h2>5: Create JSON endpoints</h2>
+        <APICard client:load />
       </Card>
     </div>
   </body>
